@@ -123,11 +123,36 @@ function modifierStatut(id) {
   // TODO : changer uniquement le statut du bon produit dans les deux sens.
   // Le nom, le prix et l'id ne changent pas.
   // Mettre à jour la sauvegarde et l'affichage selon les critères actifs.
+
+ for (let i = 0; i < produits.length; i++) {
+    if (produits[i].id === id) {
+      if (produits[i].statut === "Acheté") {
+        produits[i].statut = "À acheter";
+      } else {
+        produits[i].statut = "Acheté";
+      }
+      break;
+    }
+    console.log("weird");
+    console.log(produits[id]);
+  }
+  sauvegarderProduits();
+  actualiserAffichage();
 }
 
 function supprimerProduit(id) {
   // TODO : demander confirmation et retirer uniquement le bon produit.
   // Mettre à jour la sauvegarde et l'affichage si la suppression est confirmée.
+  if (!confirm("Voulez-vous vraiment supprimer ce produit ?"))
+    return;
+  for (let i = 0; i < produits.length; i++) {
+    if (produits[i].id === id) {
+      produits.splice(i, 1);
+      break;
+    }
+  }
+  sauvegarderProduits();
+  actualiserAffichage();
 }
 
 function appliquerCriteres() {
@@ -136,6 +161,32 @@ function appliquerCriteres() {
   // Modes : initial, croissant et decroissant.
   // Retourner les résultats sans modifier le tableau complet produits.
   // Le retour ci-dessous affiche provisoirement toute la liste.
+  // const motDeRecherche = champRecherche.value.trim().toLowerCase();
+  // const statut = filtreStatut.value;
+  // let firstFiltre = [];
+  // let secondFiltre = []
+  // for (let i = 0; i < produits.length; i++){
+  //   if (produits[i].nom.toLowerCase() === motDeRecherche)
+  //     firstFiltre.push(produits[i]);
+  // }
+  // if (firstFiltre){
+  //   for (let i = 0; i < firstFiltre.length; i++){
+  //     if (produits[i].statut === statut)
+  //       secondFiltre.push(produits[i]);
+  //   }
+  // }
+  // else
+  //   return "Aucun Resultat trouvee";  
+
+  // if (secondFiltre){
+  //   let j;
+  //   for (j = 0; i < secondFiltre.length; i++){
+  //     for (let i = 0; i < produits.length; i++){
+  //       if (produits[i].id === secondFiltre[j].id)
+  //         produits.splice(i, 1);
+  //     }
+  //   }
+  // }
   return produits;
 }
 
@@ -170,3 +221,4 @@ document
 chargerProduits();
 prochainId = Math.max(0, ...produits.map((produit) => produit.id)) + 1;
 actualiserAffichage();
+
